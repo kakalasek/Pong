@@ -1,0 +1,13 @@
+#box{
+    border: 4px solid black;
+    height: 450px;
+    width: 800px;
+    margin: auto;
+}
+
+#cnvas{
+    position: relative;
+    height: 100%;
+    width: 100%;
+    background: green;
+}
