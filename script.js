@@ -4,52 +4,77 @@ const ctx = cnvas.getContext("2d")
 canvas.width = canvas.offsetWidth
 canvas.height = canvas.offsetHeight
 
-hello there
+const ball = {
+    x: canvas.width / 2,
+    y: canvas.height/2,
+    size: 20
+}
 
-function canvs_init(){
+const paddle1 = {
+    x: 0,
+    y: (canvas.height/2) - 50,
+    width: 30,
+    height: 100
+}
+
+const paddle2 = {
+    x: canvas.width - 30,
+    y: (canvas.height/2) - 50,
+    width: 30,
+    height: 100
+}
+
+function drawBall(x, y, size){
+    ctx.beginPath()
+    ctx.arc(x, y, size, 0, 2 * Math.PI)
+    ctx.fill()
+}
+
+function drawPaddle1(x, y, width, height){
+    ctx.fillRect(x, y, width, height)
+    ctx.fillRect(x, y, width, height)
+}
+
+function drawPaddle2(x, y, width, height){
+    ctx.fillRect(x, y, width, height)
+    ctx.fillRect(x, y, width, height)
+}
+
+function updateBall(x, y, speedX, speedY){
+
+}
+
+function updatePaddle1(speedY){
+    paddle1.y += speedY
+}
+
+function updatePaddle2(speedY){
+    paddle2.y += speedY
+}
+
+function canvas_loop(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    canvas_update()
+    requestAnimationFrame(canvas_loop)
+}
+
+function canvas_update(){
     ctx.fillStyle = 'white'
     ctx.strokeStyle = 'white'
 
-    let paddle1 = new Paddle(0, (canvas.height/2) - 50)
-    let paddle2 = new Paddle(canvas.width - 30, (canvas.height/2) - 50)
-
-    paddle1.draw()
-    paddle2.draw()
-
-    let ball = new Ball((canvas.width / 2), (canvas.height/2))
-    ball.draw()
+    drawBall(ball.x, ball.y, ball.size)
+    drawPaddle1(paddle1.x, paddle1.y, paddle1.width, paddle1.height)
+    drawPaddle2(paddle2.x, paddle2.y, paddle2.width, paddle2.height)
 }
 
-class Ball{
-    constructor(x, y){
-        this.x = x
-        this.y = y
-        this.speedX = 3
-        this.speedY = 3
-    }
-    draw(){
-        ctx.beginPath()
-        ctx.arc(this.x, this.y, 20, 0, 2 * Math.PI)
-        ctx.fill()
-    }
-}
 
-class Paddle{
-    constructor(x, y){
-        this.x = x
-        this.y = y
-        this.speedY = 3
-    }
-    draw(){
-        ctx.fillRect(this.x, this.y, 30, 100)
-        ctx.fillRect(this.x, this.y, 30, 100)
-    }
-    move(direction){
-        if(direction == 1) this.y -= this.speedY
-        if(direction == 2) this.y += this.speedY
-    }
-}
+document.addEventListener('keydown', (event) => {
+    if(event.key == 'w') updatePaddle1(-5)
+    if(event.key == 's') updatePaddle1(5)
+    if(event.key == 'ArrowUp') updatePaddle2(-5)
+    if(event.key == 'ArrowDown') updatePaddle2(5)
+})
 
 
 // USER CODE
-canvs_init()
+canvas_loop()
