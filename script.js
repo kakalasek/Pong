@@ -4,7 +4,7 @@ const ctx = cnvas.getContext("2d")
 canvas.width = canvas.offsetWidth
 canvas.height = canvas.offsetHeight
 
-window.addEventListener
+hello there
 
 function canvs_init(){
     ctx.fillStyle = 'white'
