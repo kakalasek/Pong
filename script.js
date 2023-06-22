@@ -3,6 +3,8 @@ const canvas = document.getElementById("cnvas")
 const ctx = cnvas.getContext("2d")
 canvas.width = canvas.offsetWidth
 canvas.height = canvas.offsetHeight
+let ball_speed_X = 2
+let ball_speed_Y = -2
 
 const ball = {
     x: canvas.width / 2,
@@ -40,8 +42,14 @@ function drawPaddle2(x, y, width, height){
     ctx.fillRect(x, y, width, height)
 }
 
-function updateBall(x, y, speedX, speedY){
-
+function updateBall(){
+    if((ball.y - ball.size) <= 0){
+        ball_speed_Y = ball_speed_Y * (-1)
+    }else if((ball.y + ball.size) >= canvas.height){
+        ball_speed_Y = ball_speed_Y * (-1)
+    }
+    ball.x += ball_speed_X
+    ball.y += ball_speed_Y
 }
 
 function updatePaddle1(speedY){
@@ -63,16 +71,17 @@ function canvas_update(){
     ctx.strokeStyle = 'white'
 
     drawBall(ball.x, ball.y, ball.size)
+    updateBall(ball_speed_X, ball_speed_Y)
     drawPaddle1(paddle1.x, paddle1.y, paddle1.width, paddle1.height)
     drawPaddle2(paddle2.x, paddle2.y, paddle2.width, paddle2.height)
 }
 
 
 document.addEventListener('keydown', (event) => {
-    if(event.key == 'w') updatePaddle1(-5)
-    if(event.key == 's') updatePaddle1(5)
-    if(event.key == 'ArrowUp') updatePaddle2(-5)
-    if(event.key == 'ArrowDown') updatePaddle2(5)
+    if(event.key == 'w') updatePaddle1(-10)
+    if(event.key == 's') updatePaddle1(10)
+    if(event.key == 'ArrowUp') updatePaddle2(-10)
+    if(event.key == 'ArrowDown') updatePaddle2(10)
 })
 
 
