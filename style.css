@@ -11,3 +11,8 @@
     width: 100%;
     background: green;
 }
+
+.score{
+    position: relative;
+    font-size: 50px;
+}
